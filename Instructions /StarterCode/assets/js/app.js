@@ -7,13 +7,13 @@ var height = svgHeight - margin.top - margin.bottom;
 
 // Create an SVG wrapper, append an SVG group that will hold our chart, and shift the latter by left and top margins.
 var svg = d3
-  .select('#chart')
+  .select('#scatter')
   .append('svg')
   .attr('width', svgWidth)
   .attr('height', svgHeight);
 //   .append('g')
   
-var chart = svg.append('g')
+var chartGroup = svg.append('g')
 .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 
@@ -86,16 +86,16 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 }
 
 // Retrieve data from the CSV file and execute everything below
-d3.csv("data/data.csv", function(err, healthData) {
-    console.log("Is this working?")
-  if (err) throw err;
+d3.csv("./assets/js/data.csv").then(function(healthData) {
+    console.log(healthData)
+  // if (err) throw err;
 
   // parse data
   healthData.forEach(function(data) {
     data.poverty = +data.poverty;
     data.healthcare = +data.healthcare;
 });
-
+    console.log("Ryan is cool")
   // xLinearScale function above csv import
   var xLinearScale = xScale(healthData, chosenXAxis);
 
@@ -107,6 +107,7 @@ d3.csv("data/data.csv", function(err, healthData) {
   // Create initial axis functions
   var bottomAxis = d3.axisBottom(xLinearScale);
   var leftAxis = d3.axisLeft(yLinearScale);
+  // var chartGroup = d3.select("#scatter").append("svg:svg");
 
   // append x axis
   var xAxis = chartGroup.append("g")

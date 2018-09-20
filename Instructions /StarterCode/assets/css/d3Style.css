@@ -6,20 +6,21 @@
 
 .active {
   font-weight: bold;
-  fill: #000;
+  fill:black;
   transition: fill 0.3s ease-out;
   text-anchor: middle;
+  cursor: pointer;
 }
 
 .inactive {
   font-weight: lighter;
-  fill: #c9c9c9;
+  fill: darkgray;
   transition: fill 0.3s ease-out;
   text-anchor: middle;
 }
 
 .inactive:hover {
-  fill: #000;
+  fill: gray;
   cursor: pointer;
 }
 
@@ -32,15 +33,15 @@
 
 .stateCircle {
   fill: #89bdd3;
-  stroke: #e3e3e3;
+  stroke: black;
 }
 
-.chart {
+.scatter {
   display: block;
   margin: 0;
 }
 
-.d3-tip {
+.tooltip {
   padding: 6px;
   font-size: 12px;
   line-height: 1;

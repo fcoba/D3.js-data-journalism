@@ -76,10 +76,14 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 
   circlesGroup.on("mouseover", function(data) {
     toolTip.show(data,this);
+    d3.select(this)
+      .attr("r", "40");
   })
     // onmouseout event
     .on("mouseout", function(data) {
       toolTip.hide(data);
+      d3.select(this)
+        .attr("r", "10");
     });
 
   return circlesGroup;
@@ -119,20 +123,37 @@ d3.csv("./assets/js/data.csv").then(function(healthData) {
   chartGroup.append("g")
     .call(leftAxis);
 
-  // append initial circles
-  var circlesGroup = chartGroup.selectAll("circle")
+  var datapoints = chartGroup.selectAll("circle")
     .data(healthData)
-    .enter()
-    .append("circle")
+    .enter();
+
+  var circlesGroup = datapoints.append("circle")
     .attr("cx", d => xLinearScale(d.poverty))
     .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", 10)
     .attr("opacity", ".75")
-    .attr("class", "stateCircle")
-    // .append("text")
-	  // .attr("dx", function(d){return -20})
-    // .text(function(d){return d.label})
-    // .attr("class", "stateText");
+    .attr("class", "stateCircle");
+
+  datapoints.append("text")
+    .attr("dx", function(d){return xLinearScale(d.poverty)})
+    .attr("dy", d => yLinearScale(d.healthcare) + 5)
+    .attr("class", "stateText")
+    .text(function(d){return d.abbr});
+
+  // append initial circles
+  // var circlesGroup = chartGroup.selectAll("circle")
+  //   .data(healthData)
+  //   .enter()
+  //   .append("circle")
+  //   .attr("cx", d => xLinearScale(d.poverty))
+  //   .attr("cy", d => yLinearScale(d.healthcare))
+  //   .attr("r", 10)
+  //   .attr("opacity", ".75")
+  //   .attr("class", "stateCircle")
+  //   // .append("text")
+	//   // .attr("dx", function(d){return -20})
+  //   // .text(function(d){return d.abbr})
+  //   // .attr("class", "stateText");
 
   
     var toolTip = d3.tip()
